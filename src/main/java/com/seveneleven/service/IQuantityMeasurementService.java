@@ -11,4 +11,5 @@ public interface IQuantityMeasurementService {
 	QuantityMeasurementDto subtract(QuantityDto thisQuantity, QuantityDto thatQuantity);
 	QuantityMeasurementDto multiply(QuantityDto thisQuantity, QuantityDto thatQuantity);
 	QuantityMeasurementDto divide(QuantityDto thisQuantity, QuantityDto thatQuantity);
+	Object getHistory();
 }

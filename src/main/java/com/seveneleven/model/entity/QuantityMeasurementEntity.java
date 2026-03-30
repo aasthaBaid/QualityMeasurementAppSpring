@@ -47,3 +47,4 @@ public class QuantityMeasurementEntity {
         createdAt = LocalDateTime.now();
     }
 }
+

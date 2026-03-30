@@ -91,4 +91,10 @@ public class QuantityMeasurementController {
         );
         return ResponseEntity.ok(result);
     }
+    
+    @GetMapping("/history")
+    public ResponseEntity<?> getHistory() {
+		return ResponseEntity.ok(service.getHistory());
+	}
+    
 }
