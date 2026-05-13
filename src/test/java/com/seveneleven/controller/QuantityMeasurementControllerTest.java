@@ -34,7 +34,6 @@ class QuantityMeasurementControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // ---------------- CONVERT ----------------
     @Test
     void testConvert() throws Exception {
 
@@ -64,7 +63,6 @@ class QuantityMeasurementControllerTest {
                 .andExpect(jsonPath("$.error").value(false));
     }
 
-    // ---------------- COMPARE ----------------
     @Test
     void testCompare() throws Exception {
 
