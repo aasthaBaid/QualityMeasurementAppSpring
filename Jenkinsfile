@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+ 
+    tools {
+        jdk 'JDK17'
+        maven 'Maven'
+    }
+ 
+    stages {
+ 
+        stage('Clone Repository') {
+            steps {
+                git branch: 'dev',
+                url: 'https://github.com/aasthaBaid/QuantityMeasurementAppSpring.git'
+            }
+        }
+ 
+        stage('Build JAR') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+ 
+        stage('Deploy to Backend') {
+            steps {
+                sh '''
+                set -e
+ 
+                JAR_FILE=$(ls target/*.jar | head -n 1)
+ 
+                echo "Deploying $JAR_FILE"
+ 
+                scp -o StrictHostKeyChecking=no \
+                    -i ~/.ssh/jenkins_ci_key \
+                    "$JAR_FILE" \
+                    ubuntu@172.31.42.46:/opt/quantityapp/app.jar
+ 
+                ssh -o StrictHostKeyChecking=no \
+                    -i ~/.ssh/jenkins_ci_key \
+                    ubuntu@172.31.42.46 << 'EOF'
+                        sudo systemctl restart quantityapp
+                        sudo systemctl status quantityapp --no-pager
+EOF
+                '''
+            }
+        }
+    }
+}
